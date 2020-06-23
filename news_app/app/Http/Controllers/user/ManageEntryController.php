@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\NewsEntry;
 use Auth;
+use Storage;
 use Validator;
 
 class ManageEntryController extends Controller
@@ -80,7 +81,7 @@ class ManageEntryController extends Controller
 		$validator = Validator::make($input, [
 			'title' => 'required|string|max:200',
 			'description' => 'string|max:200',
-			'body' => 'required|string'
+			'body' => 'required|string',
 		]);
 
 		//バリデーション失敗
@@ -89,15 +90,55 @@ class ManageEntryController extends Controller
 				->withErrors($validator)
 				->withInput();
 		}
-		
+
 		//バリデーション成功
 		$news->title = $input["title"];
 		$news->description = $input["description"];
 		$news->body = $input["body"];
 		$news->user_id = Auth::id();
-		$news->thumbnail_url = "";
-		$news->image_url = "";
 		$news->save();
+		
+		
+		/* 画像のアップロード */
+		$uploadInput = $request->only("image", "thumbnail");
+		
+		$uploadValidator = Validator::make($uploadInput, [
+			'image' => 'file|image|mimes:jpeg,png',
+			'thumbnail' => 'file|image|mimes:jpeg,png',
+		]);
+
+		//アップロード失敗
+		if($uploadValidator->fails()){
+			return redirect('news/edit/' . $news->id)
+				->withErrors($uploadValidator)
+				->withInput();
+		}
+
+		//画像が更新されたかどうか
+		$is_change_image = false;
+
+		//イメージのアップロード
+		if(isset($uploadInput["image"])){
+			$path = $uploadInput["image"]->store("public/news_uploads/" . $news->id);
+			if($path){
+				$news->image_url = $path;
+				$is_change_image = true;
+			}
+		}
+
+		//サムネイルのアップロード
+		if(isset($uploadInput["thumbnail"])){
+			$path = $uploadInput["thumbnail"]->store("public/news_uploads/" . $news->id);
+			if($path){
+				$news->thumbnail_url = $path;
+				$is_change_image = true;
+			}
+		}
+		
+		//保存する
+		if($is_change_image){
+			$news->save();
+		}
 
 		return redirect("home")->withStatus("記事を更新しました");
 	}

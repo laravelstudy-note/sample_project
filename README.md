@@ -18,3 +18,6 @@ Laravelの教科書のサンプルです。
 	- お知らせアプリ
 	- https://note.com/laravelstudy/m/m2d73c46dad41
 	
+- form_sample
+	- 確認画面付きフォーム
+	- https://note.com/laravelstudy/n/n1b82595e9fdd

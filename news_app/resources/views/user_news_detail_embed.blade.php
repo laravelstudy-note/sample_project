@@ -24,10 +24,15 @@
 			</div>
 
 			<div class="mt-3 text-center">
-				<a href="{{ url('u/' . $user->display_name  . '/?embed' )}}">一覧に戻る</a>
+				<a href="{{ url('u/' . $user->display_name )}}?embed">一覧に戻る</a>
 			</div>
 			
 		</div>
 	</div>
 </div>
+<style type="text/css">
+#app nav.navbar {
+	display:none
+}
+</style>
 @endsection

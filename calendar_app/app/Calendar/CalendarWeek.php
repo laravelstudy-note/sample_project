@@ -6,8 +6,8 @@ use Carbon\Carbon;
 
 class CalendarWeek {
 
-	private $carbon;
-	private $index = 0;
+	protected $carbon;
+	protected $index = 0;
 
 	function __construct($date, $index = 0){
 		$this->carbon = new Carbon($date);
@@ -44,14 +44,21 @@ class CalendarWeek {
 			}
 				
 			//今月
-			$day = new CalendarWeekDay($tmpDay->copy());
-			$day->checkHoliday($setting);
-			$days[] = $day;
+			$days[] = $this->getDay($tmpDay->copy(), $setting);
 
 			//翌日に移動
 			$tmpDay->addDay(1);
 		}
 		
 		return $days;
+	}
+
+	/**
+	 * @return CalendarWeekDay
+	 */
+	function getDay(Carbon $date, HolidaySetting $setting){
+		$day = new CalendarWeekDay($date);
+		$day->checkHoliday($setting);
+		return $day;
 	}
 }

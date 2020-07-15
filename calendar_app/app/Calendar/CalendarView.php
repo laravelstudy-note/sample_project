@@ -3,10 +3,12 @@
 namespace App\Calendar;
 
 use Carbon\Carbon;
+use App\Calendar\ExtraHoliday;
 
 class CalendarView {
 
-	private $carbon;
+	protected $carbon;
+	protected $holidays = [];
 
 	function __construct($date){
 		$this->carbon = new Carbon($date);
@@ -28,6 +30,11 @@ class CalendarView {
 		//HolidaySetting
 		$setting = HolidaySetting::firstOrNew();
 		$setting->loadHoliday($this->carbon->format("Y"));
+
+		//臨時営業日の読み込み
+		$this->holidays = ExtraHoliday::getExtraHolidayWithMonth($this->carbon->format("Ym"));
+
+		//臨時営業日を取得する
 
 		$html = [];
 		$html[] = '<div class="calendar">';
@@ -52,9 +59,7 @@ class CalendarView {
 			$days = $week->getDays($setting);
 
 			foreach($days as $day){
-				$html[] = '<td class="'.$day->getClassName().'">';
-				$html[] = $day->render();
-				$html[] = '</td>';
+				$html[] = $this->renderDay($day);
 			}
 
 			$html[] = '</tr>';
@@ -63,6 +68,18 @@ class CalendarView {
 
 		$html[] = '</table>';
 		$html[] = '</div>';
+
+		return implode("", $html);
+	}
+
+	/**
+	 * 日を描画する
+	 */
+	protected function renderDay(CalendarWeekDay $day){
+		$html = [];
+		$html[] = '<td class="'.$day->getClassName().'">';
+		$html[] = $day->render();
+		$html[] = '</td>';
 
 		return implode("", $html);
 	}
@@ -77,8 +94,7 @@ class CalendarView {
 		$lastDay = $this->carbon->copy()->lastOfMonth();
 
 		//1周週目
-		$week = new CalendarWeek($firstDay->copy());
-		$weeks[] = $week;
+		$weeks[] = $this->getWeek($firstDay->copy());
 
 		//作業用の日
 		$tmpDay = $firstDay->copy()->addDay(7)->startOfWeek();
@@ -87,13 +103,19 @@ class CalendarView {
 		while($tmpDay->lte($lastDay)){
 
 			//週カレンダーViewを作成する
-			$week = new CalendarWeek($tmpDay, count($weeks));
-			$weeks[] = $week;
+			$weeks[] = $this->getWeek($tmpDay->copy(), count($weeks));
 
 			//次の週=+7日する
 			$tmpDay->addDay(7);
 		}
 
 		return $weeks;
+	}
+
+	/**
+	 * @return CalendarWeek
+	 */
+	protected function getWeek(Carbon $date, $index = 0){
+		return new CalendarWeek($date, $index);
 	}
 }

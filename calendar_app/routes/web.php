@@ -28,3 +28,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 //祝日設定
 Route::get('/holiday_setting', 'Calendar\HolidaySettingController@form')->name("holiday_setting");
 Route::post('/holiday_setting', 'Calendar\HolidaySettingController@update')->name("update_holiday_setting");
+
+//臨時営業設定
+Route::get('/extra_holiday_setting', 'Calendar\ExtraHolidaySettingController@form')->name("extra_holiday_setting");
+Route::post('/extra_holiday_setting', 'Calendar\ExtraHolidaySettingController@update')->name("update_extra_holiday_setting");

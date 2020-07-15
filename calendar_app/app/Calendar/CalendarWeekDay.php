@@ -13,6 +13,14 @@ class CalendarWeekDay {
 		$this->carbon = new Carbon($date);
 	}
 
+	function getDateKey(){
+		return $this->carbon->format("Ymd");
+	}
+
+	function setHoliday($flag){
+		$this->isHoliday = $flag;
+	}
+
 	function getClassName(){
 		$classNames = [ "day-" . strtolower($this->carbon->format("D")) ];
 
@@ -63,7 +71,6 @@ class CalendarWeekDay {
 		else if($this->carbon->isSunday() && $setting->isCloseSunday()){
 			$this->isHoliday = true;	
 		}
-
 		
 		//祝日は曜日とは別に判定する
 		if($setting->isCloseHoliday() && $setting->isHoliday($this->carbon)){

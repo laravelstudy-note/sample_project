@@ -32,3 +32,11 @@
 	text-align: center;
 	border: solid 1px #999;
 }
+
+.calendar table {
+	table-layout: fixed;
+}
+
+.calendar table .comment{
+	font-size: small;
+}

@@ -21,7 +21,20 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
 
+/* 作成 */
 Route::get('/recipe/create', [App\Http\Controllers\CreateRecipeController::class, "create"])
 	->name("create_recipe");
 Route::post('/recipe/create', [App\Http\Controllers\CreateRecipeController::class, "store"])
 	->name("store_recipe");
+
+/* 一覧 */
+Route::get('/recipe', [App\Http\Controllers\RecipeListController::class, "show"])
+	->name("recipe_list");
+
+/* 詳細・編集 */
+Route::get('/recipe/{id}', [App\Http\Controllers\RecipeController::class, "show"])
+	->name("recipe_detail");
+Route::get('/recipe/edit/{id}', [App\Http\Controllers\RecipeController::class, "form"])
+	->name("recipe_edit");
+Route::post('/recipe/edit/{id}', [App\Http\Controllers\RecipeController::class, "update"])
+	->name("update_recipe");

@@ -23,7 +23,7 @@ class HolidaySettingController extends Controller
 
 	}
 
-	function update(Request $request){
+	function update(HolidaySettingRequest $request){
 
 		//取得
 		$setting = HolidaySetting::firstOrNew();
@@ -38,3 +38,7 @@ class HolidaySettingController extends Controller
 	}
 
 }
+class HolidaySettingRequest extends Request {
+
+}
+

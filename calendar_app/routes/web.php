@@ -17,7 +17,17 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Route::get('/', 'CalendarController@show');
+Route::get('/', 'CalendarController@show')->name("calendar");
+
+Route::get('/calendar2', function(){
+	return view('calendar_blade',[
+		"time" => new \Carbon\Carbon(strtotime($_GET["date"])),
+		"schedule" => [
+			"20201122" => "いい夫婦の日でした！",
+			"20201123" => "勤労感謝の日",
+		]
+	]);
+});
 
 
 

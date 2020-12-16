@@ -21,6 +21,13 @@ class CalendarView {
 		return $this->carbon->format('Y年n月');
 	}
 
+	public function nextMonth(){
+		return $this->carbon->copy()->firstOfMonth()->addMonthsNoOverflow(1);
+	}
+
+	public function prevMonth(){
+		return $this->carbon->copy()->firstOfMonth()->subMonthsNoOverflow(1);
+	}
 
 	/**
 	 * カレンダーを出力する

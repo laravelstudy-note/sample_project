@@ -10942,3 +10942,8 @@ a.text-dark:focus {
   }
 }
 
+.todo-item input:checked ~ span {
+  color: gray;
+  text-decoration: line-through;
+}
+

@@ -6,3 +6,10 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+
+// css
+.todo-item input:checked ~ span {
+	color: gray;
+	text-decoration: line-through;
+}

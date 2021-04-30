@@ -8,6 +8,7 @@
 </head>
 <body>
 <div class="container py-5">
+	<div id="app"></div>
 	<div id="example"></div>
 </div>
 

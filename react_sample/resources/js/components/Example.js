@@ -4,8 +4,14 @@ import ReactDOM from 'react-dom';
 
 import Alert from "./Alert";
 
+import BookView from "./example/BookView";
+import BookView2 from "./example/BookView2";
+import BookEditView from "./example/BookEditView";
+import BookEditView2 from "./example/BookEditView2";
 
 function Example() {
+
+	console.log("called: Example")
 	
 	const [visibled, setVisibled] = useState(0)
 
@@ -19,9 +25,11 @@ function Example() {
 		}
 		
 	}
+
+	
 	
     return (
-        <div className="container">
+        <div className="container mt-3">
             <div className="row justify-content-center">
                 <div className="col-md-8">
                     <div className="card">
@@ -36,10 +44,27 @@ function Example() {
 							<button 
 								className="btn btn-primary" 
 								onClick={() => setVisibled(1) }>Alertを表示</button>
+
+
 						</div>
                     </div>
                 </div>
+
             </div>
+
+			<div className="row mt-3">
+				<div className="col-md-3">
+					<BookView />
+				</div>
+
+				<div className="col-md-3">
+					<BookView2 />
+				</div>
+
+				<BookEditView />
+				<BookEditView2 />
+
+			</div>
         </div>
     );
 }

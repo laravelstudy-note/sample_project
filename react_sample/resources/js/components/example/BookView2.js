@@ -7,8 +7,6 @@ import Book from "./Book";
 
 function BookView2() {
 
-	console.log("Called: BookView2");
-	
 	const book = new Book("ダミー書籍", "ダミー著者", 1000);
 	const [bookState, setBook] = useState(book);
 

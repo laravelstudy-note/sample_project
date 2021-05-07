@@ -4,8 +4,11 @@ import TodoList from "./TodoList";
 
 function App() {
 
+	//@TODO Laravelに通信して初期値を取得する
+	const initialTodoList = []
+
 	//Todoを取得する
-	const [todoList, setTodoList] = useState([])
+	const [todoList, setTodoList] = useState(initialTodoList)
 
 	//TodoFormから値を受け取る
 	const handleAdd = (title) => {
@@ -13,6 +16,8 @@ function App() {
 		//useStateで配列を保存する時は、
 		//新しい配列を生成して保存しないと再描画されない
 		setTodoList([...todoList, title]);
+
+		//@TODO Laravelに通信して追加分を保存する
 		
 	};
 

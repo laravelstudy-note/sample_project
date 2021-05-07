@@ -6,10 +6,10 @@ import React, { useState } from 'react';
 import Book from "./Book";
 import BookView from "./BookView";
 
-function BookEditView2() {
+function BookEditView2(props) {
 	
 	//これが編集対象のオブジェクト
-	const book = new Book("ダミー書籍", "ダミー著者", 1000)
+	const book = (props.book) ? props.book : new Book("ダミー書籍", "ダミー著者", 1000)
 	const [bookState, setBook] = useState(book);
 
 	//タイトルを更新する

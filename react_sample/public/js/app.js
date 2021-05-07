@@ -66005,8 +66005,10 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 function App() {
-  //Todoを取得する
-  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]),
+  //@TODO Laravelに通信して初期値を取得する
+  var initialTodoList = []; //Todoを取得する
+
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(initialTodoList),
       _useState2 = _slicedToArray(_useState, 2),
       todoList = _useState2[0],
       setTodoList = _useState2[1]; //TodoFormから値を受け取る
@@ -66015,7 +66017,7 @@ function App() {
   var handleAdd = function handleAdd(title) {
     //useStateで配列を保存する時は、
     //新しい配列を生成して保存しないと再描画されない
-    setTodoList([].concat(_toConsumableArray(todoList), [title]));
+    setTodoList([].concat(_toConsumableArray(todoList), [title])); //@TODO Laravelに通信して追加分を保存する
   };
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -66059,6 +66061,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _example_BookView2__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./example/BookView2 */ "./resources/js/components/example/BookView2.js");
 /* harmony import */ var _example_BookEditView__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./example/BookEditView */ "./resources/js/components/example/BookEditView.js");
 /* harmony import */ var _example_BookEditView2__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./example/BookEditView2 */ "./resources/js/components/example/BookEditView2.js");
+/* harmony import */ var _example_BookManageView__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./example/BookManageView */ "./resources/js/components/example/BookManageView.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -66072,6 +66075,7 @@ function _iterableToArrayLimit(arr, i) { var _i = arr && (typeof Symbol !== "und
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 //import React from 'react';
+
 
 
 
@@ -66117,13 +66121,15 @@ function Example() {
     onClick: function onClick() {
       return setVisibled(1);
     }
-  }, "Alert\u3092\u8868\u793A"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }, "Alert\u3092\u8868\u793A"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Class\u3092\u4F5C\u3063\u3066\u305D\u308C\u3092\u63CF\u753B\u3059\u308B\u30B3\u30F3\u30DD\u30FC\u30CD\u30F3\u30C8", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "-> ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("code", null, "BookView, Book")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "\u7DE8\u96C6UI\u3092\u3069\u3046\u4F5C\u308B\u304B", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "-> ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("code", null, "BookEditView, BookEditView2")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "\u8868\u793A\u72B6\u614B\u306E\u5207\u308A\u66FF\u3048 -> ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("code", null, "BookManageView"))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "\u30AF\u30E9\u30B9\u3092\u3064\u304B\u3063\u305F\u8868\u793A\u3001\u7DE8\u96C6"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "row mt-3"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "col-md-3"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_example_BookView__WEBPACK_IMPORTED_MODULE_3__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "col-md-3"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_example_BookView2__WEBPACK_IMPORTED_MODULE_4__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_example_BookEditView__WEBPACK_IMPORTED_MODULE_5__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_example_BookEditView2__WEBPACK_IMPORTED_MODULE_6__["default"], null)));
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_example_BookView2__WEBPACK_IMPORTED_MODULE_4__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_example_BookEditView__WEBPACK_IMPORTED_MODULE_5__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_example_BookEditView2__WEBPACK_IMPORTED_MODULE_6__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "UI\u306E\u72B6\u614B\u5207\u66FF\u5909\u66F4"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "row justify-content-center mt-3"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_example_BookManageView__WEBPACK_IMPORTED_MODULE_7__["default"], null)));
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (Example);
@@ -66294,9 +66300,9 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-function BookEditView2() {
+function BookEditView2(props) {
   //これが編集対象のオブジェクト
-  var book = new _Book__WEBPACK_IMPORTED_MODULE_1__["default"]("ダミー書籍", "ダミー著者", 1000);
+  var book = props.book ? props.book : new _Book__WEBPACK_IMPORTED_MODULE_1__["default"]("ダミー書籍", "ダミー著者", 1000);
 
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(book),
       _useState2 = _slicedToArray(_useState, 2),
@@ -66395,9 +66401,9 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-function BookEditView2() {
+function BookEditView2(props) {
   //これが編集対象のオブジェクト
-  var book = new _Book__WEBPACK_IMPORTED_MODULE_1__["default"]("ダミー書籍", "ダミー著者", 1000); //編集用のクラスの無いオブジェクトを作成する
+  var book = props.book ? props.book : new _Book__WEBPACK_IMPORTED_MODULE_1__["default"]("ダミー書籍", "ダミー著者", 1000); //編集用のクラスの無いオブジェクトを作成する
 
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(Object.assign({}, book)),
       _useState2 = _slicedToArray(_useState, 2),
@@ -66407,8 +66413,10 @@ function BookEditView2() {
   var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(book),
       _useState4 = _slicedToArray(_useState3, 2),
       bookState = _useState4[0],
-      setBook = _useState4[1]; //値を更新する
+      setBook = _useState4[1]; //保存ボタンイベント
 
+
+  var onSave = props.onSave ? props.onSave : function () {}; //値を更新する
 
   var updateValue = function updateValue(name, value) {
     //値を更新する
@@ -66461,7 +66469,12 @@ function BookEditView2() {
     onChange: function onChange(e) {
       updateValue(e.target.name, e.target.value);
     }
-  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "btn btn-primary",
+    onClick: function onClick() {
+      onSave(bookState);
+    }
+  }, "Save"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "col-md-6"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_BookView__WEBPACK_IMPORTED_MODULE_2__["default"], {
     book: bookState
@@ -66469,6 +66482,86 @@ function BookEditView2() {
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (BookEditView2);
+
+/***/ }),
+
+/***/ "./resources/js/components/example/BookManageView.js":
+/*!***********************************************************!*\
+  !*** ./resources/js/components/example/BookManageView.js ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Book__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Book */ "./resources/js/components/example/Book.js");
+/* harmony import */ var _BookView__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./BookView */ "./resources/js/components/example/BookView.js");
+/* harmony import */ var _BookEditView2__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./BookEditView2 */ "./resources/js/components/example/BookEditView2.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr && (typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]); if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+/*
+クラスの作成とそれを描画するためのコンポーネントの作成
+*/
+
+
+
+
+
+function BookManageView(props) {
+  var book = new _Book__WEBPACK_IMPORTED_MODULE_1__["default"]("表示編集切り替えUI", "表示編集切り替えUI作者", 1000); //book編集用のstate
+
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(book),
+      _useState2 = _slicedToArray(_useState, 2),
+      bookState = _useState2[0],
+      setBookState = _useState2[1]; //表示状態切替用のstate
+
+
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
+      _useState4 = _slicedToArray(_useState3, 2),
+      editState = _useState4[0],
+      setEditState = _useState4[1];
+
+  var renderComponent = function renderComponent(isEdit) {
+    console.log("renderComponent=" + isEdit);
+
+    if (isEdit) {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_BookEditView2__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        book: bookState,
+        onSave: function onSave(book) {
+          setBookState(book);
+          setEditState(!editState);
+        }
+      });
+    } else {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_BookView__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        book: bookState
+      });
+    }
+  };
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-12"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "btn btn-outline-secondary",
+    onClick: function onClick() {
+      setEditState(!editState);
+    }
+  }, "\u5207\u308A\u66FF\u3048"), renderComponent(editState));
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (BookManageView);
 
 /***/ }),
 
@@ -66538,7 +66631,6 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 function BookView2() {
-  console.log("Called: BookView2");
   var book = new _Book__WEBPACK_IMPORTED_MODULE_1__["default"]("ダミー書籍", "ダミー著者", 1000);
 
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(book),

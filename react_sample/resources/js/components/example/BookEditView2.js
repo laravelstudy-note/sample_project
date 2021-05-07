@@ -6,14 +6,17 @@ import React, { useState } from 'react';
 import Book from "./Book";
 import BookView from "./BookView";
 
-function BookEditView2() {
+function BookEditView2(props) {
 	
 	//これが編集対象のオブジェクト
-	const book = new Book("ダミー書籍", "ダミー著者", 1000)
-
+	const book = (props.book) ? props.book : new Book("ダミー書籍", "ダミー著者", 1000)
+	
 	//編集用のクラスの無いオブジェクトを作成する
 	const [editItem, setEditItem] = useState(Object.assign({}, book));
 	const [bookState, setBook] = useState(book);
+
+	//保存ボタンイベント
+	const onSave = (props.onSave) ? props.onSave : () => {}
 
 	//値を更新する
 	const updateValue = (name, value) => {
@@ -63,6 +66,8 @@ function BookEditView2() {
 							onChange={ (e) => { updateValue(e.target.name, e.target.value) } }
 						/>
 					</div>
+
+					<button className="btn btn-primary" onClick={ () => { onSave(bookState) } }>Save</button>
 				</div>
 			</div>
 			<div className="col-md-6">

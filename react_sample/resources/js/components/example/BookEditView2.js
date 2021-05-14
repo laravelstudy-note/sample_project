@@ -67,6 +67,9 @@ function BookEditView2(props) {
 						/>
 					</div>
 
+					<button>+</button>
+					<button>-</button>
+
 					<button className="btn btn-primary" onClick={ () => { onSave(bookState) } }>Save</button>
 				</div>
 			</div>

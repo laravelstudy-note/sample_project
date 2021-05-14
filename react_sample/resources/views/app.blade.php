@@ -9,9 +9,18 @@
 <body>
 <div class="container py-5">
 	<div id="app"></div>
-	<div id="example"></div>
 </div>
 
+<script>
+//URLを渡す
+var TODO_API_LIST = "{{ url('/todo/list') }}";
+var TODO_API_CREATE = "{{ url('/todo/create') }}";
+var TODO_API_FINISH = "{{ url('/todo/finish') }}";
+var TODO_API_CLEAR = "{{ url('/todo/clear_finish') }}";
+
+//CSRFを渡す
+var TODO_API_CSRF = "{{ csrf_token() }}";
+</script>
 <script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>

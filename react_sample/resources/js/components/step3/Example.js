@@ -16,18 +16,16 @@ function Example() {
 	
 	const [visibled, setVisibled] = useState(0)
 
-	const alertRender = (isVisible, callback) => {
+	const alertRender = (isVisible, onCloseCallback) => {
 		if(isVisible){
 			return <Alert 
 				message="Exampleから渡す" 
 				type="success"
-				onClose={ () => callback(0) }
+				onClose={ () => onCloseCallback(0) }
 			/>
 		}
 		
 	}
-
-	
 	
     return (
         <div className="container mt-3">
@@ -37,8 +35,6 @@ function Example() {
                         <div className="card-header">これはReactのコンポーネントです</div>
 
                         <div className="card-body">
-							
-							{ alertRender(visibled, setVisibled) }
 							
 							本文を書き換えます
 

@@ -29,7 +29,8 @@ class TodoController extends Controller
 		if(!$title){
 			return response()->json([
 				"result" => 0,
-				"error" => "タイトルが入力されていません"
+				"error" => "タイトルが入力されていません",
+				"req" => $request->input()
 			]);
 		}
 
@@ -43,23 +44,32 @@ class TodoController extends Controller
 		]);
 	}
 
-	function finish(Request $request, $id){
+	function finish(Request $request){
 
-		$item = TodoItem::find($id);
-
-		if(!$item){
+		$title = $request->input("title");
+		$value = $request->input("value", 1);
+		
+		//探す
+		$item_list = TodoItem::where("title","=",$title)->get();
+		
+		if(!$item_list){
 			return response()->json([
 				"result" => 0,
-				"error" => "指定のIDは存在しません"
+				"error" => "指定のタスクはありません"
 			]);
 		}
 
 		//todo_status = 1にすると完了済にする
-		$item->todo_status = 1;
-		$item->save();
+		foreach($item_list as $item){
+			$item->todo_status = (int)$value;
+			$item->save();
+		}
+
+		$allItems = TodoItem::all();
 
 		return response()->json([
-			"result" => 1
+			"result" => 1,
+			"items" => $allItems,
 		]);
 
 	}
@@ -72,10 +82,15 @@ class TodoController extends Controller
 		//件数を取得する
 		$count = TodoItem::count();
 
+		$allItems = TodoItem::all();
+
 		return response()->json([
 			"result" => 1,
-			"count" => $count
+			"count" => $count,
+			"items" => $allItems,
 		]);
 
 	}
 }
+
+

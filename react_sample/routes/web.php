@@ -18,7 +18,7 @@ Route::get('/', function () {
 });
 
 
-Route::post('/todo/list', "\App\Http\Controllers\TodoController@all");
+Route::get('/todo/list', "\App\Http\Controllers\TodoController@all");
 Route::post('/todo/create', "\App\Http\Controllers\TodoController@create");
-Route::post('/todo/finish/{id}', "\App\Http\Controllers\TodoController@finish");
+Route::post('/todo/finish', "\App\Http\Controllers\TodoController@finish");
 Route::post('/todo/clear_finish', "\App\Http\Controllers\TodoController@clearFinish");

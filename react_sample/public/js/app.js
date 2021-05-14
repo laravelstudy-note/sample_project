@@ -65860,30 +65860,33 @@ module.exports = function(module) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _components_App__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/App */ "./resources/js/components/App.js");
+/* harmony import */ var _bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+/* harmony import */ var _bootstrap__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_bootstrap__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _components_Example__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/Example */ "./resources/js/components/Example.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _components_App__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/App */ "./resources/js/components/App.js");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes React and other helpers. It's a great starting point while
  * building robust, powerful web applications using React + Laravel.
  */
-__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+//require('./bootstrap');
+
 /**
  * Next, we will create a fresh React component instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-
-
-__webpack_require__(/*! ./components/Example */ "./resources/js/components/Example.js");
-
+//require('./components/Example');
 
 
 
-react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_App__WEBPACK_IMPORTED_MODULE_2__["default"], null), document.getElementById('app'));
+
+
+react_dom__WEBPACK_IMPORTED_MODULE_3___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_components_App__WEBPACK_IMPORTED_MODULE_4__["default"], null), document.getElementById('app'));
 
 /***/ }),
 
@@ -65932,41 +65935,6 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
-/***/ "./resources/js/components/Alert.js":
-/*!******************************************!*\
-  !*** ./resources/js/components/Alert.js ***!
-  \******************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-
-
-function Alert(props) {
-  var message = props.message;
-  var className = props.type;
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "alert alert-" + className,
-    role: "alert"
-  }, message, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    onClick: function onClick() {
-      return props.onClose();
-    },
-    type: "button",
-    className: "close",
-    "aria-label": "Close"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-    "aria-hidden": "true"
-  }, "\xD7")));
-}
-
-/* harmony default export */ __webpack_exports__["default"] = (Alert);
-
-/***/ }),
-
 /***/ "./resources/js/components/App.js":
 /*!****************************************!*\
   !*** ./resources/js/components/App.js ***!
@@ -65980,6 +65948,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _TodoForm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TodoForm */ "./resources/js/components/TodoForm.js");
 /* harmony import */ var _TodoList__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./TodoList */ "./resources/js/components/TodoList.js");
+/* harmony import */ var _Todo__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Todo */ "./resources/js/components/Todo.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -66003,21 +65972,152 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+ //初期値
+
+function load_todo(callback) {
+  //参考: https://ja.reactjs.org/docs/faq-ajax.html
+  fetch(TODO_API_LIST).then(function (res) {
+    return res.json();
+  }).then(function (result) {
+    callback(result.items.map(function (item) {
+      return new _Todo__WEBPACK_IMPORTED_MODULE_3__["default"](item.title, item.todo_status);
+    }));
+  }, // 補足：コンポーネント内のバグによる例外を隠蔽しないためにも
+  // catch()ブロックの代わりにここでエラーハンドリングすることが重要です
+  function (error) {
+    alert("エラーが発生しました");
+  });
+}
+
+function add_todo(title, callback) {
+  //送信するデータ
+  var data = {
+    title: title
+  };
+  fetch(TODO_API_CREATE, {
+    method: 'POST',
+    body: JSON.stringify(data),
+    //送信データをJSONに変換する,
+    headers: {
+      'X-CSRF-TOKEN': TODO_API_CSRF,
+      'Content-Type': 'application/json'
+    }
+  }).then(function (res) {
+    return res.json();
+  }).then(function (result) {
+    callback(new _Todo__WEBPACK_IMPORTED_MODULE_3__["default"](result.item.title, result.item.todo_status));
+  }, function (error) {
+    alert("エラーが発生しました");
+  });
+}
+
+function update_todo(title, value, callback) {
+  //送信するデータ
+  var data = {
+    title: title,
+    value: value
+  };
+  fetch(TODO_API_FINISH, {
+    method: 'POST',
+    body: JSON.stringify(data),
+    //送信データをJSONに変換する,
+    headers: {
+      'X-CSRF-TOKEN': TODO_API_CSRF,
+      'Content-Type': 'application/json'
+    }
+  }).then(function (res) {
+    return res.json();
+  }).then(function (result) {
+    callback(result.items.map(function (item) {
+      return new _Todo__WEBPACK_IMPORTED_MODULE_3__["default"](item.title, item.todo_status);
+    }));
+  }, function (error) {
+    alert("エラーが発生しました");
+  });
+}
+
+function clear_todo(callback) {
+  //送信するデータ
+  var data = {};
+  fetch(TODO_API_CLEAR, {
+    method: 'POST',
+    body: JSON.stringify(data),
+    //送信データをJSONに変換する,
+    headers: {
+      'X-CSRF-TOKEN': TODO_API_CSRF,
+      'Content-Type': 'application/json'
+    }
+  }).then(function (res) {
+    return res.json();
+  }).then(function (result) {
+    callback(result.items.map(function (item) {
+      return new _Todo__WEBPACK_IMPORTED_MODULE_3__["default"](item.title, item.todo_status);
+    }));
+  }, function (error) {
+    alert("エラーが発生しました");
+  });
+}
 
 function App() {
-  //@TODO Laravelに通信して初期値を取得する
-  var initialTodoList = []; //Todoを取得する
-
-  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(initialTodoList),
+  //Todoを取得する
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]),
       _useState2 = _slicedToArray(_useState, 2),
       todoList = _useState2[0],
       setTodoList = _useState2[1]; //TodoFormから値を受け取る
 
 
   var handleAdd = function handleAdd(title) {
-    //useStateで配列を保存する時は、
-    //新しい配列を生成して保存しないと再描画されない
-    setTodoList([].concat(_toConsumableArray(todoList), [title])); //@TODO Laravelに通信して追加分を保存する
+    //新しく追加するtodo
+    var todo = new _Todo__WEBPACK_IMPORTED_MODULE_3__["default"](title, 0); //通信を行う
+
+    add_todo(title, function (ret) {
+      console.log("callback add todo", ret); //通信に成功した時にstateを更新する
+      //useStateで配列を保存する時は、
+      //新しい配列を生成して保存しないと再描画されない
+
+      setTodoList([].concat(_toConsumableArray(todoList), [todo]));
+    });
+  }; //TodoListから値を受け取る
+
+
+  var handleChange = function handleChange(id, title, nextValue) {
+    //更新する
+    var target = todoList.find(function (todo) {
+      return todo.title == title;
+    });
+
+    if (target) {
+      target.status = nextValue ? 1 : 0;
+    } //値を更新する
+
+
+    update_todo(title, nextValue, function (items) {
+      setTodoList(_toConsumableArray(items));
+    });
+  }; //通信管理用のstate
+
+
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
+      _useState4 = _slicedToArray(_useState3, 2),
+      loaded = _useState4[0],
+      setLoaded = _useState4[1]; //初期値を読み込む
+
+
+  if (!loaded) {
+    load_todo(function (items) {
+      setLoaded(true); //読み込みが完了したらstateを更新する
+
+      setTodoList(_toConsumableArray(items));
+    });
+  } //
+
+
+  var clearComplete = function clearComplete() {
+    clear_todo(function (items) {
+      setLoaded(true); //読み込みが完了したらstateを更新する
+
+      setTodoList(_toConsumableArray(items));
+    });
   };
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -66035,8 +66135,12 @@ function App() {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_TodoForm__WEBPACK_IMPORTED_MODULE_1__["default"], {
     handleAdd: handleAdd
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_TodoList__WEBPACK_IMPORTED_MODULE_2__["default"], {
-    items: todoList
-  }))))));
+    items: todoList,
+    onChange: handleChange
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    onClick: clearComplete,
+    className: "btn btn-danger"
+  }, "\u5B8C\u4E86\u3057\u305F\u30BF\u30B9\u30AF\u3092\u524A\u9664"))))));
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (App);
@@ -66056,12 +66160,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _Alert__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Alert */ "./resources/js/components/Alert.js");
-/* harmony import */ var _example_BookView__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./example/BookView */ "./resources/js/components/example/BookView.js");
-/* harmony import */ var _example_BookView2__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./example/BookView2 */ "./resources/js/components/example/BookView2.js");
-/* harmony import */ var _example_BookEditView__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./example/BookEditView */ "./resources/js/components/example/BookEditView.js");
-/* harmony import */ var _example_BookEditView2__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./example/BookEditView2 */ "./resources/js/components/example/BookEditView2.js");
-/* harmony import */ var _example_BookManageView__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./example/BookManageView */ "./resources/js/components/example/BookManageView.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -66074,38 +66172,44 @@ function _iterableToArrayLimit(arr, i) { var _i = arr && (typeof Symbol !== "und
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-//import React from 'react';
-
-
-
-
-
-
 
 
 
 function Example() {
-  console.log("called: Example");
+  var title = "これはタイトルです";
+  var text = "これは本文です";
 
-  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(0),
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(""),
       _useState2 = _slicedToArray(_useState, 2),
-      visibled = _useState2[0],
-      setVisibled = _useState2[1];
+      value1 = _useState2[0],
+      setValue1 = _useState2[1];
 
-  var alertRender = function alertRender(isVisible, callback) {
-    if (isVisible) {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Alert__WEBPACK_IMPORTED_MODULE_2__["default"], {
-        message: "Example\u304B\u3089\u6E21\u3059",
-        type: "success",
-        onClose: function onClose() {
-          return callback(0);
-        }
-      });
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(""),
+      _useState4 = _slicedToArray(_useState3, 2),
+      value2 = _useState4[0],
+      setValue2 = _useState4[1];
+
+  var onClick = function onClick() {
+    alert(value1 + "\n" + value2);
+  };
+
+  var onChangeValue = function onChangeValue(event) {
+    var name = event.target.name;
+    var value = event.target.value;
+    console.log(name + " => " + value);
+
+    if (name == "hoge1") {
+      setValue1(value);
+    }
+
+    if (name == "hoge2") {
+      setValue2(value);
     }
   };
 
+  var book = props.book ? props.book : new Book("ダミー書籍", "ダミー著者", 1000);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "container mt-3"
+    className: "container"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "row justify-content-center"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -66114,22 +66218,37 @@ function Example() {
     className: "card"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "card-header"
-  }, "\u3053\u308C\u306FReact\u306E\u30B3\u30F3\u30DD\u30FC\u30CD\u30F3\u30C8\u3067\u3059"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }, title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "card-body"
-  }, alertRender(visibled, setVisibled), "\u672C\u6587\u3092\u66F8\u304D\u63DB\u3048\u307E\u3059", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    className: "btn btn-primary",
-    onClick: function onClick() {
-      return setVisibled(1);
+  }, text), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+    onSubmit: function (_onSubmit) {
+      function onSubmit(_x) {
+        return _onSubmit.apply(this, arguments);
+      }
+
+      onSubmit.toString = function () {
+        return _onSubmit.toString();
+      };
+
+      return onSubmit;
+    }(function (event) {
+      onSubmit(event);
+    })
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    type: "text",
+    name: "hoge1",
+    onChange: function onChange(e) {
+      return onChangeValue(e);
     }
-  }, "Alert\u3092\u8868\u793A"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Class\u3092\u4F5C\u3063\u3066\u305D\u308C\u3092\u63CF\u753B\u3059\u308B\u30B3\u30F3\u30DD\u30FC\u30CD\u30F3\u30C8", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "-> ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("code", null, "BookView, Book")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "\u7DE8\u96C6UI\u3092\u3069\u3046\u4F5C\u308B\u304B", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "-> ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("code", null, "BookEditView, BookEditView2")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "\u8868\u793A\u72B6\u614B\u306E\u5207\u308A\u66FF\u3048 -> ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("code", null, "BookManageView"))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "\u30AF\u30E9\u30B9\u3092\u3064\u304B\u3063\u305F\u8868\u793A\u3001\u7DE8\u96C6"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "row mt-3"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "col-md-3"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_example_BookView__WEBPACK_IMPORTED_MODULE_3__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "col-md-3"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_example_BookView2__WEBPACK_IMPORTED_MODULE_4__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_example_BookEditView__WEBPACK_IMPORTED_MODULE_5__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_example_BookEditView2__WEBPACK_IMPORTED_MODULE_6__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "UI\u306E\u72B6\u614B\u5207\u66FF\u5909\u66F4"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "row justify-content-center mt-3"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_example_BookManageView__WEBPACK_IMPORTED_MODULE_7__["default"], null)));
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    type: "text",
+    name: "hoge2",
+    onChange: function onChange(e) {
+      return onChangeValue(e);
+    }
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    type: "submit"
+  }, "button"))))));
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (Example);
@@ -66137,6 +66256,30 @@ function Example() {
 if (document.getElementById('example')) {
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Example, null), document.getElementById('example'));
 }
+
+/***/ }),
+
+/***/ "./resources/js/components/Todo.js":
+/*!*****************************************!*\
+  !*** ./resources/js/components/Todo.js ***!
+  \*****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Todo; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+//export defaultはclassの前に書いても良い
+var Todo = function Todo(title, status) {
+  _classCallCheck(this, Todo);
+
+  this.title = title;
+  this.status = status * 1;
+};
+
+
 
 /***/ }),
 
@@ -66196,6 +66339,44 @@ function TodoForm(props) {
 
 /***/ }),
 
+/***/ "./resources/js/components/TodoItem.js":
+/*!*********************************************!*\
+  !*** ./resources/js/components/TodoItem.js ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function TodoItem(props) {
+  var id = props.id,
+      title = props.title,
+      completed = props.completed,
+      onChange = props.onChange;
+
+  var handleChangeCompleted = function handleChangeCompleted(e) {
+    if (onChange) {
+      onChange(id, title, e.target.checked);
+    }
+  };
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+    className: "todo-item"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    type: "checkbox",
+    checked: completed,
+    onChange: handleChangeCompleted
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, title));
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (TodoItem);
+
+/***/ }),
+
 /***/ "./resources/js/components/TodoList.js":
 /*!*********************************************!*\
   !*** ./resources/js/components/TodoList.js ***!
@@ -66207,482 +66388,37 @@ function TodoForm(props) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _TodoItem__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TodoItem */ "./resources/js/components/TodoItem.js");
+
 
 
 function TodoList(props) {
+  //todo_list => Todo
   var todo_list = props.items;
+  var onChange = props.onChange;
+
+  var handleOnChange = function handleOnChange(id, title, nextValue) {
+    console.log(id, title, nextValue); //親に通知する
+
+    if (onChange) {
+      onChange(id, title, nextValue);
+    }
+  };
+
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "todo-list mt-3"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "\u30BF\u30B9\u30AF\u4E00\u89A7"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, todo_list.map(function (todo, index) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-      className: "todo-item",
-      key: index
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-      type: "checkbox"
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, todo));
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_TodoItem__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      key: index,
+      id: index,
+      title: todo.title,
+      completed: todo.status > 0,
+      onChange: handleOnChange
+    });
   })));
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (TodoList);
-
-/***/ }),
-
-/***/ "./resources/js/components/example/Book.js":
-/*!*************************************************!*\
-  !*** ./resources/js/components/example/Book.js ***!
-  \*************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Book; });
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-//export defaultはclassの前に書いても良い
-var Book = /*#__PURE__*/function () {
-  function Book(title, author, price) {
-    _classCallCheck(this, Book);
-
-    this.title = title;
-    this.author = author;
-    this.price = price;
-  }
-
-  _createClass(Book, [{
-    key: "getTax",
-    value: function getTax() {
-      return Math.ceil(this.price * 0.1);
-    }
-  }]);
-
-  return Book;
-}();
-
-
-
-/***/ }),
-
-/***/ "./resources/js/components/example/BookEditView.js":
-/*!*********************************************************!*\
-  !*** ./resources/js/components/example/BookEditView.js ***!
-  \*********************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _Book__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Book */ "./resources/js/components/example/Book.js");
-/* harmony import */ var _BookView__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./BookView */ "./resources/js/components/example/BookView.js");
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function _iterableToArrayLimit(arr, i) { var _i = arr && (typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]); if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
-/*
-編集画面のサンプル
-*/
-//import React from 'react';
-
-
-
-
-function BookEditView2(props) {
-  //これが編集対象のオブジェクト
-  var book = props.book ? props.book : new _Book__WEBPACK_IMPORTED_MODULE_1__["default"]("ダミー書籍", "ダミー著者", 1000);
-
-  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(book),
-      _useState2 = _slicedToArray(_useState, 2),
-      bookState = _useState2[0],
-      setBook = _useState2[1]; //タイトルを更新する
-
-
-  var updateTitle = function updateTitle(value) {
-    var newBook = Object.assign(new _Book__WEBPACK_IMPORTED_MODULE_1__["default"]("", "", ""), bookState);
-    newBook.title = value;
-    setBook(newBook);
-  }; //価格を更新する
-
-
-  var updatePrice = function updatePrice(value) {
-    var newBook = Object.assign(new _Book__WEBPACK_IMPORTED_MODULE_1__["default"]("", "", ""), bookState);
-    newBook.price = value;
-    setBook(newBook);
-  };
-
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "col-md-6 row"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "col-md-6"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "card"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "card-header"
-  }, book.title, " \u306E\u7DE8\u96C6"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "card-body"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "\u30BF\u30A4\u30C8\u30EB"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-    type: "text",
-    className: "form-control",
-    name: "title",
-    value: bookState.title,
-    onChange: function onChange(e) {
-      updateTitle(e.target.value);
-    }
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "card-body"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "\u4FA1\u683C"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-    type: "number",
-    className: "form-control",
-    name: "price",
-    value: bookState.price,
-    onChange: function onChange(e) {
-      updatePrice(e.target.value);
-    }
-  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "col-md-6"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_BookView__WEBPACK_IMPORTED_MODULE_2__["default"], {
-    book: bookState
-  })));
-}
-
-/* harmony default export */ __webpack_exports__["default"] = (BookEditView2);
-
-/***/ }),
-
-/***/ "./resources/js/components/example/BookEditView2.js":
-/*!**********************************************************!*\
-  !*** ./resources/js/components/example/BookEditView2.js ***!
-  \**********************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _Book__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Book */ "./resources/js/components/example/Book.js");
-/* harmony import */ var _BookView__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./BookView */ "./resources/js/components/example/BookView.js");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function _iterableToArrayLimit(arr, i) { var _i = arr && (typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]); if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
-/*
-編集画面のサンプル
-*/
-//import React from 'react';
-
-
-
-
-function BookEditView2(props) {
-  //これが編集対象のオブジェクト
-  var book = props.book ? props.book : new _Book__WEBPACK_IMPORTED_MODULE_1__["default"]("ダミー書籍", "ダミー著者", 1000); //編集用のクラスの無いオブジェクトを作成する
-
-  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(Object.assign({}, book)),
-      _useState2 = _slicedToArray(_useState, 2),
-      editItem = _useState2[0],
-      setEditItem = _useState2[1];
-
-  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(book),
-      _useState4 = _slicedToArray(_useState3, 2),
-      bookState = _useState4[0],
-      setBook = _useState4[1]; //保存ボタンイベント
-
-
-  var onSave = props.onSave ? props.onSave : function () {}; //値を更新する
-
-  var updateValue = function updateValue(name, value) {
-    //値を更新する
-    //const newItem = Object.assign({}, bookState)
-    //newItem[name] = value
-    // ↑ はこの書き方にすることが出来る 
-    var newItem = _objectSpread(_objectSpread({}, editItem), _defineProperty({}, name, value));
-
-    setEditItem(newItem); //editItemからBookを作成して反映する（これはBookViewで利用するため）
-
-    var newBook = new _Book__WEBPACK_IMPORTED_MODULE_1__["default"](newItem.title, newItem.author, newItem.price);
-    setBook(newBook);
-  };
-
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "col-md-12 row mt-3"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "col-md-6"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "card"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "card-header"
-  }, editItem.title, " \u306E\u7DE8\u96C6"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "card-body"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "\u30BF\u30A4\u30C8\u30EB"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-    type: "text",
-    className: "form-control",
-    name: "title",
-    value: editItem.title,
-    onChange: function onChange(e) {
-      updateValue(e.target.name, e.target.value);
-    }
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "card-body"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "\u4F5C\u8005"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-    type: "text",
-    className: "form-control",
-    name: "author",
-    value: editItem.author,
-    onChange: function onChange(e) {
-      updateValue(e.target.name, e.target.value);
-    }
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "card-body"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "\u4FA1\u683C"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-    type: "number",
-    className: "form-control",
-    name: "price",
-    value: editItem.price,
-    onChange: function onChange(e) {
-      updateValue(e.target.name, e.target.value);
-    }
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    className: "btn btn-primary",
-    onClick: function onClick() {
-      onSave(bookState);
-    }
-  }, "Save"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "col-md-6"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_BookView__WEBPACK_IMPORTED_MODULE_2__["default"], {
-    book: bookState
-  })));
-}
-
-/* harmony default export */ __webpack_exports__["default"] = (BookEditView2);
-
-/***/ }),
-
-/***/ "./resources/js/components/example/BookManageView.js":
-/*!***********************************************************!*\
-  !*** ./resources/js/components/example/BookManageView.js ***!
-  \***********************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _Book__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Book */ "./resources/js/components/example/Book.js");
-/* harmony import */ var _BookView__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./BookView */ "./resources/js/components/example/BookView.js");
-/* harmony import */ var _BookEditView2__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./BookEditView2 */ "./resources/js/components/example/BookEditView2.js");
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function _iterableToArrayLimit(arr, i) { var _i = arr && (typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]); if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
-/*
-クラスの作成とそれを描画するためのコンポーネントの作成
-*/
-
-
-
-
-
-function BookManageView(props) {
-  var book = new _Book__WEBPACK_IMPORTED_MODULE_1__["default"]("表示編集切り替えUI", "表示編集切り替えUI作者", 1000); //book編集用のstate
-
-  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(book),
-      _useState2 = _slicedToArray(_useState, 2),
-      bookState = _useState2[0],
-      setBookState = _useState2[1]; //表示状態切替用のstate
-
-
-  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
-      _useState4 = _slicedToArray(_useState3, 2),
-      editState = _useState4[0],
-      setEditState = _useState4[1];
-
-  var renderComponent = function renderComponent(isEdit) {
-    console.log("renderComponent=" + isEdit);
-
-    if (isEdit) {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_BookEditView2__WEBPACK_IMPORTED_MODULE_3__["default"], {
-        book: bookState,
-        onSave: function onSave(book) {
-          setBookState(book);
-          setEditState(!editState);
-        }
-      });
-    } else {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_BookView__WEBPACK_IMPORTED_MODULE_2__["default"], {
-        book: bookState
-      });
-    }
-  };
-
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "col-md-12"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    className: "btn btn-outline-secondary",
-    onClick: function onClick() {
-      setEditState(!editState);
-    }
-  }, "\u5207\u308A\u66FF\u3048"), renderComponent(editState));
-}
-
-/* harmony default export */ __webpack_exports__["default"] = (BookManageView);
-
-/***/ }),
-
-/***/ "./resources/js/components/example/BookView.js":
-/*!*****************************************************!*\
-  !*** ./resources/js/components/example/BookView.js ***!
-  \*****************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _Book__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Book */ "./resources/js/components/example/Book.js");
-/*
-クラスの作成とそれを描画するためのコンポーネントの作成
-*/
-//import React from 'react';
-
-
-
-function BookView(props) {
-  var book = props.book ? props.book : new _Book__WEBPACK_IMPORTED_MODULE_1__["default"]("ダミー書籍", "ダミー著者", 1000);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "card"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "card-header"
-  }, book.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "card-body"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "\u8457\u8005: ", book.author), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "\u4FA1\u683C: ", book.price, " + ", book.getTax(), "\u5186")));
-}
-
-/* harmony default export */ __webpack_exports__["default"] = (BookView);
-
-/***/ }),
-
-/***/ "./resources/js/components/example/BookView2.js":
-/*!******************************************************!*\
-  !*** ./resources/js/components/example/BookView2.js ***!
-  \******************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _Book__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Book */ "./resources/js/components/example/Book.js");
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function _iterableToArrayLimit(arr, i) { var _i = arr && (typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]); if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
-/*
-クラスの作成とそれを描画するためのコンポーネントの作成
-*/
-//import React from 'react';
-
-
-
-function BookView2() {
-  var book = new _Book__WEBPACK_IMPORTED_MODULE_1__["default"]("ダミー書籍", "ダミー著者", 1000);
-
-  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(book),
-      _useState2 = _slicedToArray(_useState, 2),
-      bookState = _useState2[0],
-      setBook = _useState2[1]; //全く新しいBookを作る形はOK
-
-
-  var changeBook = function changeBook() {
-    var newBook = new _Book__WEBPACK_IMPORTED_MODULE_1__["default"]("newBook", "newBook Author", 2000);
-    setBook(newBook);
-  }; //一部だけ書き換えるのは動作しない
-
-
-  var changeBook2 = function changeBook2() {
-    bookState.price = 1500;
-    setBook(bookState);
-  }; //一部だけ書き換える時はinstanceの複製が必要
-
-
-  var changeBook3 = function changeBook3() {
-    //Object.assignを使って値をコピーする
-    var newBook = Object.assign(new _Book__WEBPACK_IMPORTED_MODULE_1__["default"]("", "", ""), bookState);
-    newBook.price = 1500;
-    setBook(newBook);
-  };
-
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "card"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "card-header"
-  }, bookState.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "card-body"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "\u8457\u8005: ", bookState.author), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "\u4FA1\u683C: ", bookState.price, " + ", bookState.getTax(), "\u5186"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    className: "btn btn-primary mr-1",
-    onClick: function onClick() {
-      changeBook();
-    }
-  }, "1"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    className: "btn btn-primary mr-1",
-    onClick: function onClick() {
-      changeBook2();
-    }
-  }, "2"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    className: "btn btn-primary mr-1",
-    onClick: function onClick() {
-      changeBook3();
-    }
-  }, "3")));
-}
-
-/* harmony default export */ __webpack_exports__["default"] = (BookView2);
 
 /***/ }),
 

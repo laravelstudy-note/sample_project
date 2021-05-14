@@ -6,6 +6,7 @@ export default class Book {
 		this.title = title;
 		this.author = author;
 		this.price = price
+		this.stock = 0;
 	}
 	
 	getTax(){

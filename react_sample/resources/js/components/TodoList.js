@@ -1,8 +1,20 @@
 import React from 'react';
+import TodoItem from "./TodoItem";
 
 function TodoList(props) {
 
-	const todo_list = props.items
+	//todo_list => Todo
+	const todo_list = props.items;
+	const onChange = props.onChange
+
+	const handleOnChange = (id, title, nextValue) => {
+		console.log(id, title, nextValue);
+
+		//親に通知する
+		if(onChange){
+			onChange(id, title, nextValue);
+		}
+	}
 
     return (
         <div className="todo-list mt-3">
@@ -11,10 +23,12 @@ function TodoList(props) {
 			<ul>
 				{
 					todo_list.map((todo, index) => {
-						return <li className="todo-item" key={index}>
-							<input type="checkbox" />
-							<span>{ todo }</span>
-						</li>		
+						return <TodoItem 
+							key={ index }
+							id={ index }
+							title={ todo.title }
+							completed={ todo.status > 0 }
+							onChange={ handleOnChange }/>
 					})
 				}
 			</ul>

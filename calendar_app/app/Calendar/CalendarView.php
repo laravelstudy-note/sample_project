@@ -44,6 +44,13 @@ class CalendarView {
 		//臨時営業日を取得する
 
 		$html = [];
+		$html[] = date_default_timezone_get();
+		$html[] = "<br />";
+		$html[] = date("Y-m-d H:i:s", strtotime("2021-01-01 00:00:00"));
+		$html[] = "<br />";
+		$html[] = date("c", strtotime("2021-01-01 00:00:00"));
+		$html[] = "<br />";
+		$html[] = (new Carbon(strtotime("2021-01-01 00:00:00")))->format("c");
 		$html[] = '<div class="calendar">';
 		$html[] = '<table class="table">';
 		$html[] = '<thead>';

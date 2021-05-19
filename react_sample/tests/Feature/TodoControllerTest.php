@@ -17,7 +17,7 @@ class TodoControllerTest extends TestCase
     {	
 
 		//全件取得
-		$response = $this->post('/todo/list');
+		$response = $this->get('/todo/list');
 		$response->assertStatus(200);
 		$response->assertJsonFragment([
 			"result" => 1
@@ -34,16 +34,16 @@ class TodoControllerTest extends TestCase
 		]);
 
 		//作成したものを完了にする
-		$id = $response->json("item.id");
+		$title = $response->json("item.title");
 
-		$response = $this->post('/todo/finish/' . $id);
+		$response = $this->post('/todo/finish/', [ "title" => $title]);
 		$response->assertStatus(200);
 		$response->assertJsonFragment([
 			"result" => 1
 		]);
 		
 		//全件取得
-		$response = $this->post('/todo/list');
+		$response = $this->get('/todo/list');
 		$response->assertStatus(200);
 		$response->assertJsonFragment([
 			"result" => 1

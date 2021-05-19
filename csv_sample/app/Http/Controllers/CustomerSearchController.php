@@ -105,6 +105,17 @@ class CustomerSearchController extends Controller
 {
     function search(Request $request){
 
+		$url = "http://localhost:8000/search?_token=pODZcvh55eKPK61DXNgJhAcOdeNZEPQ6GDNVPVrf&search%5Bname%5D=&search%5Breading%5D=&search%5Baddress%5D=&search%5Bbloodtype%5D=&search%5Benquete1%5D=2&search%5Benquete2%5D=1&search%5Benquete3%5D=2";
+
+		$parse_url = parse_url($url);
+		dump($parse_url);
+
+		parse_str($parse_url["query"], $query);
+		dd($query);
+
+
+
+
 		//フォームの入力値を受け取る
 		$search_input = $request->input("search", []);
 		

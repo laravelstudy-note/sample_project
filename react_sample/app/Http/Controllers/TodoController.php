@@ -26,6 +26,7 @@ class TodoController extends Controller
     function create(Request $request){
 
 		$title = $request->input("title");
+		
 		if(!$title){
 			return response()->json([
 				"result" => 0,

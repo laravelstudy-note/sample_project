@@ -22,6 +22,9 @@ import {} from "./components/Example";
 import React from "react";
 import ReactDOM from 'react-dom';
 import App from "./components/App";
+import TimerApp from "./components/TimerApp";
 
+//ReactDOM.render(<App />, document.getElementById('app'));
 ReactDOM.render(<App />, document.getElementById('app'));
+
 

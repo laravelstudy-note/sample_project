@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import TodoForm from "./TodoForm";
 import TodoList from "./TodoList";
 import Todo from "./Todo";
@@ -159,26 +159,32 @@ function App() {
 	};
 
 
-	//通信管理用のstate
-	const [loaded, setLoaded] = useState(false)
+	// //通信管理用のstate
+	// const [loaded, setLoaded] = useState(false)
 
-	//初期値を読み込む
-	if(!loaded){
+	// //初期値を読み込む
+	// if(!loaded){
+	// 	load_todo((items) => {
+
+	// 		setLoaded(true);
+
+	// 		//読み込みが完了したらstateを更新する
+	// 		setTodoList([...items]);
+
+	// 	});
+	// }
+
+	//useEffectを使って一回だけの読み込みを行う
+	useEffect(() => {
 		load_todo((items) => {
-
-			setLoaded(true);
-
-			//読み込みが完了したらstateを更新する
 			setTodoList([...items]);
+		})
 
-		});
-	}
+	}, [])
 
 	//
 	const clearComplete = () => {
 		clear_todo((items) => {
-
-			setLoaded(true);
 
 			//読み込みが完了したらstateを更新する
 			setTodoList([...items]);

@@ -65868,6 +65868,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _components_App__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/App */ "./resources/js/components/App.js");
+/* harmony import */ var _components_TimerApp__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/TimerApp */ "./resources/js/components/TimerApp.js");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes React and other helpers. It's a great starting point while
@@ -65885,6 +65886,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+ //ReactDOM.render(<App />, document.getElementById('app'));
 
 react_dom__WEBPACK_IMPORTED_MODULE_3___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_components_App__WEBPACK_IMPORTED_MODULE_4__["default"], null), document.getElementById('app'));
 
@@ -66094,28 +66097,28 @@ function App() {
     update_todo(title, nextValue, function (items) {
       setTodoList(_toConsumableArray(items));
     });
-  }; //通信管理用のstate
+  }; // //通信管理用のstate
+  // const [loaded, setLoaded] = useState(false)
+  // //初期値を読み込む
+  // if(!loaded){
+  // 	load_todo((items) => {
+  // 		setLoaded(true);
+  // 		//読み込みが完了したらstateを更新する
+  // 		setTodoList([...items]);
+  // 	});
+  // }
+  //useEffectを使って一回だけの読み込みを行う
 
 
-  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
-      _useState4 = _slicedToArray(_useState3, 2),
-      loaded = _useState4[0],
-      setLoaded = _useState4[1]; //初期値を読み込む
-
-
-  if (!loaded) {
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     load_todo(function (items) {
-      setLoaded(true); //読み込みが完了したらstateを更新する
-
       setTodoList(_toConsumableArray(items));
     });
-  } //
-
+  }, []); //
 
   var clearComplete = function clearComplete() {
     clear_todo(function (items) {
-      setLoaded(true); //読み込みが完了したらstateを更新する
-
+      //読み込みが完了したらstateを更新する
       setTodoList(_toConsumableArray(items));
     });
   };
@@ -66256,6 +66259,95 @@ function Example() {
 if (document.getElementById('example')) {
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Example, null), document.getElementById('example'));
 }
+
+/***/ }),
+
+/***/ "./resources/js/components/TimerApp.js":
+/*!*********************************************!*\
+  !*** ./resources/js/components/TimerApp.js ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr && (typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]); if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+var LIMIT = 10; // カウントダウンをする(60 から 0 を描画する)コンポーネント。 
+
+function Timer() {
+  // timeLeft という state と setTimeLeft を更新する関数を定義。
+  // 今回、useState に LIMIT(60)を渡しているため timeLeft の初期値は 60 になる
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(LIMIT),
+      _useState2 = _slicedToArray(_useState, 2),
+      timeLeft = _useState2[0],
+      setTimeLeft = _useState2[1]; // timeLeft をリセット(60に戻す)。 
+
+
+  var reset = function reset() {
+    setTimeLeft(LIMIT);
+  }; // timeLeft を更新する。 
+
+
+  var tick = function tick() {
+    //prevTimeとは？どっから出てきた
+    var func1 = function func1(prevTime) {
+      return prevTime === 0 ? LIMIT : prevTime - 1;
+    };
+
+    setTimeLeft(func1);
+    console.log('tick ' + timeLeft);
+  }; // setInterval で1秒毎に tick を実行するタイマーを作成する副作用。
+  // 第2引数に [] を渡しているので、この副作用はレンダリング後の1度しか実行されな い。
+
+
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    console.log('create Timer');
+    var timerId = setInterval(tick, 1000); // 副作用が返す関数はコンポーネントがアンマウント、もしくは副作用が再度実行された 時に呼ばれる。
+    // ↑で作成したタイマー(timerId)は削除しない限り、延々と実行され続けてしまう。
+    // そのため、コンポーネントがアンマウント、もしくは副作用が再度実行された時に clearInterval でタイマーを削除する。
+
+    return function () {
+      console.log('cleanup Timer');
+      clearInterval(timerId);
+    };
+  }, []);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "time: ", timeLeft), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    onClick: reset
+  }, "reset"), " ");
+} //??なぜAppは読み込まれる？下でTimerを読み込んでいるから
+
+
+function TimerApp() {
+  // visible(state)と setVisible(stateを更新する関数)を定義。
+  // 今回、useState に true を渡しているため visible の初期値は true になる
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(true),
+      _useState4 = _slicedToArray(_useState3, 2),
+      visible = _useState4[0],
+      setVisible = _useState4[1];
+
+  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(0),
+      _useState6 = _slicedToArray(_useState5, 2),
+      count = _useState6[0],
+      setCount = _useState6[1];
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Timer, null));
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (TimerApp);
 
 /***/ }),
 
